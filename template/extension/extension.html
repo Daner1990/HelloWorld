@@ -1,0 +1,379 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0, minimum-scale=1.0" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="拍拍宝">
+<meta name="keywords" content="Vobile,拍拍宝">
+<title>拍拍宝</title>
+<link rel="icon" href="http://www.vobileinc.com/favicon.ico" mce_href="http://www.vobileinc.com/favicon.ico" type="image/x-icon" />
+<link type="image/x-icon" href="http://www.vobileinc.com/favicon.ico" rel="Shortcut Icon" />
+<link rel="stylesheet" type="text/css" href="http://media.pala-pala.com/program/jrzxw/static/extension/style/jquery.fullPage.css" />
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}extension/style/style.css?t=20150111" />
+<link rel="stylesheet" type="text/css" href="http://media.pala-pala.com/program/jrzxw/static/extension/style/animate.min.css" />
+
+<script type="text/javascript" src="http://media.pala-pala.com/program/jrzxw/static/extension/js/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="http://media.pala-pala.com/program/jrzxw/static/extension/js/jquery-ui-1.10.2.custom.min.js"></script>
+<script type="text/javascript" src="http://media.pala-pala.com/program/jrzxw/static/extension/js/jquery.slimscroll.min.js"></script>
+<script type="text/javascript" src="http://media.pala-pala.com/program/jrzxw/static/extension/js/jquery.fullPage.min.js"></script>
+<script type="text/javascript" src="http://media.pala-pala.com/program/jrzxw/static/extension/js/main.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}extension/js/jquery.rotate.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+    var isNavigation = minWidth(1000);
+    $(window).resize(function() {
+        isNavigation = minWidth(1000);
+    });
+    var timer;
+    $('#main').fullpage({
+        anchors: ['home','12'],
+        sectionsColor: ['#fff782','#fff782','#fff782','#fff782','#fff782','#fff782'],
+        scrollOverflow: true,
+        resize:false,
+        navigationPosition: 'left',
+        slidesNavigation: true,
+        touchSensitivity: 15,
+        verticalCentered: false,
+        afterSlideLoad:function(anchorLink,index,slideIndex,direction){
+	},
+	afterRender:function(){
+            ReadyForP1();
+	},
+	onLeave:function(index,nextIndex,direction){
+            if(nextIndex==6) $("#top").fadeOut();
+            else $("#top").fadeIn();
+            switch(index){
+                case 1:
+                    setTimeout(function(){
+                        $("#p1 .content").css('opacity',0);
+
+                        $("#p1 .tv2").css('opacity',0);
+                        $("#p1 .phone").removeClass('bounceInUp');
+                        $("#p1 .hand").removeClass('fadeInLeftBig');
+                        $("#p1 .point").removeClass('point_animate').css('opacity',0);
+                    },1000);
+                break;
+                case 2:
+                    setTimeout(function(){
+                        $("#p2 .content .phone_show").css('opacity',0);
+                        $("#p2 .screen").removeClass("flipInY").removeClass("flipOutY");
+                    },1000);
+                break;
+                case 3:
+                    setTimeout(function(){
+                        $("#p3 .hand").removeClass('fadeInLeftBig').css('opacity',0);
+                    },1000);
+                break;
+                case 4:
+                    setTimeout(function(){
+                        $("#p4 .present_bg").removeClass('fadeInUp').css('opacity',0);
+                        $("#p4 .present").removeClass("fadeInDown").css('opacity',0);
+                    },1000);
+                    clearInterval(timer);
+                break;
+                case 5:
+                    setTimeout(function(){
+                        $("#p5 .content .ball_show").css('opacity',0);
+                        $("#p5 .hand").removeClass('fadeInLeftBig');
+                        $("#p5 .ball").removeClass("flipInX").removeClass("flipInY").removeClass('ball_animate').css('opacity',0);
+                    },1000);
+                        clearInterval(timer);
+                break;
+	    }
+	},
+        afterLoad:function(anchorLink,index){
+            $(".animated").attr("style",function(){
+                if($(this).parents(".section").index()!=index)
+                    return "";
+            });
+            switch(index){
+                case 1:
+                    ReadyForP1();
+
+                break;
+                case 2:
+                    $("#p2 .content").css('opacity',1);
+                    $("#p2 .content .phone_show").css('opacity',1);
+                    var el = $("#p2 .content .phone_show");
+                    var now = el.clone(true);
+                    el.before(now);
+                    $("#p2 .content .phone_show:last").remove();
+
+                    $("#p2 .screen1").delay(300).addClass('flipInY').css('opacity',1);
+                    $("#p2 .screen2").css('opacity',0);
+                    setTimeout(function(){$("#p2 .screen1").css('opacity',0);},800);
+                    setTimeout(function(){$("#p2 .screen2").css('opacity',1).addClass('flipInY');},800);
+
+
+                break;
+                case 3:
+                    $("#p3 .content").css('opacity',1);
+                    setTimeout(function(){$("#p3 .hand").addClass('fadeInLeftBig').css('opacity',1);},300);
+                    setTimeout(function(){$("#p3 .turntable").rotate({angle:0,duration:2000,animateTo:280});},1000);
+                break;
+                case 4:
+                    $("#p4 .content").css('opacity',1);
+                    var el = $("#p4 .content");
+                    var now = el.clone(true);
+                    el.before(now);
+                    $("#p4 .content:last").remove();
+                    $("#p4 .present_bg").addClass('fadeInUp').css('opacity',1);
+                    var i = 0;
+                    timer=setInterval(function(){
+                        $("#p4 .present:eq("+(i++)+")").addClass(function(){
+                            return "fadeInDown";
+                        }).css("opacity",1);
+                        if(i == 11)
+                            clearInterval(timer);
+                    },200);
+                break;
+                case 5:
+                    $("#p5 .content").css('opacity',1);
+                    $("#p5 .content .ball_show").css('opacity',1);
+                    var el = $("#p5 .content .ball_show");
+                    var now = el.clone(true);
+                    el.before(now);
+                    $("#p5 .content .ball_show:last").remove();
+                    var i = 0;
+                    timer = setInterval(function(){
+                        $("#p5 .ball:eq("+(i++)+")").addClass(function(){
+                            if($(this).index()%2==0)
+                                return "flipInX";
+                            return "flipInY";
+                        }).css("opacity",1).addClass('ball_animate').removeClass('flipInX').removeClass('flipInY').removeClass('animated');
+                        if(i == 6)
+                            clearInterval(timer);
+                    },200);
+                    setTimeout(function(){$("#p5 .hand").addClass('fadeInLeftBig').css('opacity',1);},1500);
+                break;
+            }
+	}
+    });
+
+    function ReadyForP1()
+    {
+        $("#p1 .content").css('opacity',1);
+        var el = $("#p1 .content");
+        var now = el.clone(true);
+        el.before(now);
+        $("#p1 .content:last").remove();
+
+        setTimeout(function(){$("#p1 .tv2").css('opacity',1);},300);
+        setTimeout(function(){$("#p1 .phone").addClass('bounceInUp').css('opacity',1);},500);
+        setTimeout(function(){$("#p1 .hand").addClass('fadeInLeftBig').css('opacity',1);},800);
+        setTimeout(function(){$("#p1 .point").addClass('point_animate').css('opacity',1);},1300);
+    }
+
+    $("#back").click(function(){window.location.href="#";});
+
+    var getRequestParam = function(){
+        var url = location.search; 
+        var theRequest = new Object();
+        if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            strs = str.split("&");
+            for(var i = 0; i < strs.length; i ++) {
+                theRequest[strs[i].split("=")[0]]=(strs[i].split("=")[1]);
+            }    
+        }
+        return theRequest;
+    }
+
+    if (getRequestParam()['isfromapp']){
+        $("#back").css('display','block');
+        $(".content .subject").css('margin-top','35px');
+    }
+
+});
+
+//browser info
+var browser={
+    versions:function(){
+        var u = navigator.userAgent, app = navigator.appVersion;
+        return {         //移动终端浏览器版本信息
+            trident: u.indexOf('Trident') > -1, //IE内核
+            presto: u.indexOf('Presto') > -1, //opera内核
+            webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+            gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+            mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+            ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+            android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器
+            iPhone: u.indexOf('iPhone') > -1 , //是否为iPhone或者QQHD浏览器
+            iPad: u.indexOf('iPad') > -1, //是否iPad
+            webApp: u.indexOf('Safari') == -1, //是否web应该程序，没有头部与底部	        
+            msync: u.indexOf('mSync') != -1 //是否mSync
+        }
+    }(),
+    language:(navigator.browserLanguage || navigator.language).toLowerCase()
+}
+
+function downloadApp(downloadType) {           	
+    if(browser.versions.iPhone){	 
+        if(typeof(WeixinJSBridge) != "undefined") {
+            window.location.href = "http://mp.weixin.qq.com/mp/redirect?url=https://itunes.apple.com/cn/app/pa-la-pa-la/id871935535";
+        }else{
+            window.location.href = "https://itunes.apple.com/cn/app/pa-la-pa-la/id871935535";
+        }   
+    }else{
+        window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.vobileinc.nfmedia";
+    }
+}
+</script>
+</head>
+
+<body>
+    <section id="main">
+    <div id="back"></div>
+    <img src="http://media.pala-pala.com/program/jrzxw/static/extension/img/icon_up.png" id="top" class="animation-transition" />
+    <section class="section" id="p1">
+        <div class="content max-width">
+            <p class="subject">轻拍</p>
+            <p class="sub_subject">识别广告</p>
+            <div class="tv tv1 animated"></div>
+            <div class="tv tv2 animated"></div>
+            <div class="phone animated"></div>
+            <div class="point"></div>
+            <div class="hand animated"></div>
+            <div class="scroll-top"><span class="icon"></span>向上滑动</div>
+        </div>
+    </section>
+    <section class="section" id="p2">
+        <div class="content max-width">
+            <p class="subject">识别</p>
+            <p class="sub_subject">参与活动</p>
+            <div class="tvbg"></div>
+            <div class="phone bg"></div>
+            <div class="phone_show bg">
+                <div class="screen1 screen animated"></div>
+                <div class="screen2 screen animated"></div>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="p3">
+        <div class="content max-width">
+            <p class="subject">抽奖</p>
+            <p class="sub_subject">参与活动</p>
+            <div class="turntable"></div>
+            <div class="cursor"></div>
+            <div class="award"></div>
+            <div class="hand animated"></div>
+        </div>
+    </section>
+    <section class="section" id="p4">
+        <div class="content max-width">
+            <p class="subject">优惠券</p>
+            <p class="sub_subject">实惠带回家</p>
+            <div class="present_bg bg animated"></div>
+            <div class="present_show bg">
+                <img src="{{STATIC_URL}}extension/img/p4-1.png" class="present present1 animated" />
+                <img src="{{STATIC_URL}}extension/img/p4-2.png" class="present present2 animated" />
+                <img src="{{STATIC_URL}}extension/img/p4-3.png" class="present present3 animated" />
+                <img src="{{STATIC_URL}}extension/img/p4-4.png" class="present present4 animated" />
+                <img src="{{STATIC_URL}}extension/img/p4-5.png" class="present present5 animated" />
+                <img src="{{STATIC_URL}}extension/img/p4-6.png" class="present present6 animated" />
+                <img src="{{STATIC_URL}}extension/img/p4-7.png" class="present present7 animated" />
+                <img src="{{STATIC_URL}}extension/img/p4-8.png" class="present present8 animated" />
+                <img src="{{STATIC_URL}}extension/img/p4-9.png" class="present present9 animated" />
+                <img src="{{STATIC_URL}}extension/img/p4-10.png" class="present present10 animated" />
+                <img src="{{STATIC_URL}}extension/img/p4-11.png" class="present present11 animated" />
+            </div>
+        </div>
+    </section>
+    <section class="section" id="p5">
+        <div class="content max-width">
+            <p class="subject">一键轻松分享</p>
+            <div class="ball_bg bg"></div>
+            <div class="ball_show bg">
+                <img src="{{STATIC_URL}}extension/img/p5-5.png" class="ball ball1 animated" />
+                <img src="{{STATIC_URL}}extension/img/p5-7.png" class="ball ball2 animated" />
+                <img src="{{STATIC_URL}}extension/img/p5-2.png" class="ball ball3 animated" />
+                <img src="{{STATIC_URL}}extension/img/p5-3.png" class="ball ball4 animated" />
+                <img src="{{STATIC_URL}}extension/img/p5-6.png" class="ball ball5 animated" />
+                <img src="{{STATIC_URL}}extension/img/p5-4.png" class="ball ball6 animated" />
+            </div>
+            <div class="award"></div>
+            <div class="hand animated"></div>
+        </div>
+    </section>
+    </section>
+    
+    <script>
+        var appid = '';
+        var domainUrl = 'http://znewsapp.pala-pala.com/';
+        var imgUrl = encodeURI(domainUrl + "ZuiNews_APP/static/images/palapala_new/ForShare114.png");
+        var link = encodeURI(domainUrl + "extension/");
+        var linkApp = link;
+        var linkTimeline = link;
+        var desc = htmlDecode("点击上方链接，可下载广东广播电视台“啪啦啪啦”互动APP");
+        var title = htmlDecode("拍电视、抢稿费、赢大奖");
+        var titleTimeline = title;
+
+        function htmlDecode(str){
+            return str
+            .replace(/&#39;/g, '\'')
+            .replace(/<br\s*(\/)?\s*>/g, '\n')
+            .replace(/&nbsp;/g, ' ')
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&quot;/g, '"')
+            .replace(/&amp;/g, '&');
+        }
+
+        //分享到好友
+        function shareFriend() {
+            WeixinJSBridge.invoke('sendAppMessage',{
+                "appid": appid,
+                "img_url": imgUrl,
+                "img_width": "640",
+                "img_height": "640",
+                "link": linkApp,
+                "desc": desc,
+                "title": title
+                }, function(res) {
+                //_report('send_msg', res.err_msg);
+            })
+        }
+        //分享到朋友圈
+        function shareTimeline() {
+            WeixinJSBridge.invoke('shareTimeline',{
+                "img_url": imgUrl,
+                "img_width": "640",
+                "img_height": "640",
+                "link": linkTimeline,
+                "desc": "timeline-desc",
+                "title": titleTimeline
+                }, function(res) {
+                //_report('timeline', res.err_msg);
+            });
+        }
+        //分享到微博
+        function shareWeibo() {
+            WeixinJSBridge.invoke('shareWeibo',{
+                "img_url": imgUrl,
+                "img_width": "640",
+                "img_height": "640",
+                "content": desc,
+                "link": link,
+                }, function(res) {
+                //_report('weibo', res.err_msg);
+            });
+        }
+        // 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            // 发送给好友
+            WeixinJSBridge.on('menu:share:appmessage', function(argv){
+                shareFriend();
+            });
+            // 分享到朋友圈
+            WeixinJSBridge.on('menu:share:timeline', function(argv){
+                shareTimeline();
+            });
+            // 分享到微博
+            WeixinJSBridge.on('menu:share:weibo', function(argv){
+                shareWeibo();
+            });
+        }, false);
+    </script>
+</body>
+</html>
